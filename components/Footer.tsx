@@ -8,7 +8,6 @@ interface Props {
 export default function Footer({ name, contact }: Props) {
   const links = [
     contact.github && { label: "GitHub", href: contact.github },
-    contact.linkedin && { label: "LinkedIn", href: contact.linkedin },
     contact.website && { label: "Website", href: contact.website },
     contact.twitter && { label: "Twitter / X", href: contact.twitter },
   ].filter(Boolean) as { label: string; href: string }[];
