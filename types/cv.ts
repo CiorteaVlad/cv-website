@@ -42,6 +42,8 @@ export interface CVConfig {
   name: string;
   title: string;
   photo?: string;
+  /** If set (e.g. "/cv.pdf"), "Download CV" links to this file in /public. Otherwise print dialog (Save as PDF). */
+  cvPdfPath?: string;
   contact: ContactInfo;
   summary: string;
   experience: ExperienceItem[];

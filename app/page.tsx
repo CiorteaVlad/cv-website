@@ -13,7 +13,13 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       <Navbar />
       <main className="max-w-5xl mx-auto px-6 py-14 print:py-8 print:px-0">
-        <Header name={cv.name} title={cv.title} photo={cv.photo} contact={cv.contact} />
+        <Header
+          name={cv.name}
+          title={cv.title}
+          photo={cv.photo}
+          contact={cv.contact}
+          cvPdfPath={cv.cvPdfPath}
+        />
         <Summary summary={cv.summary} />
         <Experience experience={cv.experience} />
         <Skills skills={cv.skills} />

@@ -9,6 +9,7 @@ interface Props {
   title: CVConfig["title"];
   photo?: CVConfig["photo"];
   contact: CVConfig["contact"];
+  cvPdfPath?: CVConfig["cvPdfPath"];
 }
 
 const avatarSize = 112;
@@ -18,7 +19,8 @@ const chipClass =
   "text-sm text-gray-600 bg-white hover:scale-105 hover:border-indigo-300 " +
   "hover:shadow-sm hover:text-indigo-700 transition-all duration-150 cursor-pointer select-none";
 
-export default function Header({ name, title, photo, contact }: Props) {
+export default function Header({ name, title, photo, contact, cvPdfPath }: Props) {
+  const downloadFileName = `${name.replace(/[^\w\s-]/g, "").replace(/\s+/g, "-")}-CV.pdf`;
   const [phoneRevealed, setPhoneRevealed] = useState(false);
 
   const chips = [
@@ -112,6 +114,30 @@ export default function Header({ name, title, photo, contact }: Props) {
           </li>
         )}
 
+        <li key="download-cv">
+          {cvPdfPath ? (
+            <a
+              href={cvPdfPath}
+              download={downloadFileName}
+              className={chipClass}
+            >
+              <DownloadIcon />
+              Download CV
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className={chipClass}
+              title="Opens the print dialog — choose Save as PDF to download your CV"
+              aria-label="Download CV — opens print dialog; use Save as PDF"
+            >
+              <DownloadIcon />
+              Download CV
+            </button>
+          )}
+        </li>
+
         {chips.map(({ icon, label, href, external }) => {
           if (!href) {
             return (
@@ -137,6 +163,14 @@ export default function Header({ name, title, photo, contact }: Props) {
         })}
       </ul>
     </header>
+  );
+}
+
+function DownloadIcon() {
+  return (
+    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
+    </svg>
   );
 }
 

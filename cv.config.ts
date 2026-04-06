@@ -4,6 +4,7 @@ export const cv: CVConfig = {
   name: "Vlad Ciortea",
   title: "Senior QA Engineer | Scrum Master",
   photo: "/photo.png",
+  cvPdfPath: "/CV_Vlad_Ciortea.pdf",
 
   contact: {
     email: "ciorteavlad2004@yahoo.com",
