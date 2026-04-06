@@ -108,7 +108,7 @@ export default function Header({ name, title, photo, contact, cvPdfPath }: Props
               aria-label={phoneRevealed ? "Hide phone number" : "Show phone number"}
             >
               <PhoneIcon />
-              <span className="print:hidden">{phoneRevealed ? contact.phone : "xxxx-xxx"}</span>
+              <span className="print:hidden">{phoneRevealed ? contact.phone : "XXXX-XXX-XXX"}</span>
               <span className="hidden print:inline">{contact.phone}</span>
             </button>
           </li>
