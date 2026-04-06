@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f9fafb;
+  color: #111827;
+  font-family: var(--font-sans);
+}
+
+/* ── Print styles ── */
+@media print {
+  html,
+  body {
+    background: #fff !important;
+    font-size: 11pt;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  /* Hide interactive decorations when printing */
+  footer {
+    display: none;
+  }
+
+  /* Avoid breaking articles across pages */
+  article {
+    break-inside: avoid;
+  }
+
+  /* Avoid orphaned headings */
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+}
