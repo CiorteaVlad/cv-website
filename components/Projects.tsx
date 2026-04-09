@@ -10,6 +10,99 @@ interface Props {
   projects: ProjectItem[];
 }
 
+function ProjectCard({
+  project,
+  index,
+  onSelect,
+}: {
+  project: ProjectItem;
+  index: number;
+  onSelect: (p: ProjectItem) => void;
+}) {
+  const [hover, setHover] = useState(false);
+
+  return (
+    <motion.article
+      role="button"
+      tabIndex={0}
+      onClick={() => onSelect(project)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect(project);
+        }
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      initial={{ opacity: 0, scale: 0.95, y: 16 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.35, delay: index * 0.08, ease: "easeOut" }}
+      whileHover={{
+        boxShadow: "0 8px 24px rgba(61,74,26,0.10)",
+        borderColor: "#b0a86a",
+      }}
+      className="group relative overflow-hidden shrink-0 w-64 border border-gray-200 rounded-lg p-4 flex flex-col gap-3
+                 snap-start bg-white cursor-pointer text-left"
+    >
+      <motion.div
+        className="pointer-events-none absolute top-0 left-0 right-0 z-20 h-0.5 bg-[#3d4a1a]"
+        style={{ transformOrigin: "left" }}
+        initial={{ scaleX: 0, opacity: 0 }}
+        animate={{ scaleX: hover ? 1 : 0, opacity: hover ? 1 : 0 }}
+        transition={{ duration: 0.25 }}
+        aria-hidden
+      />
+      <div className="relative z-10 flex flex-col gap-3 flex-1 min-h-0">
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="text-sm font-semibold text-gray-900">{project.name}</h3>
+          <div className="flex gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
+            {project.repo && (
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${project.name} source code`}
+                className="text-gray-400 hover:text-[#3d4a1a] transition-colors"
+              >
+                <GithubIcon />
+              </a>
+            )}
+            {project.url && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${project.name} live site`}
+                className="text-gray-400 hover:text-[#3d4a1a] transition-colors"
+              >
+                <ExternalLinkIcon />
+              </a>
+            )}
+          </div>
+        </div>
+
+        <p className="text-sm text-gray-600 leading-relaxed line-clamp-5 min-h-0">{project.description}</p>
+
+        <div className="flex flex-wrap gap-1.5">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <span className="mt-auto pt-1 text-xs font-medium text-[#556128] group-hover:text-[#3d4a1a] transition-colors">
+          View details →
+        </span>
+      </div>
+    </motion.article>
+  );
+}
+
 export default function Projects({ projects }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -57,113 +150,56 @@ export default function Projects({ projects }: Props) {
     <section className={`${sectionFrameClass} ${sectionScrollMarginClass}`}>
       <SectionHeading id="projects">Projects</SectionHeading>
 
-      <div className="relative">
+      <div className="relative isolate">
         <div
           ref={scrollRef}
           onScroll={checkScroll}
-          className="flex gap-4 overflow-x-auto pb-3 scroll-smooth snap-x snap-mandatory
+          className="relative z-0 flex gap-4 overflow-x-auto pb-3 scroll-smooth snap-x snap-mandatory
                      [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {projects.map((project, index) => (
-            <motion.article
+            <ProjectCard
               key={project.name}
-              role="button"
-              tabIndex={0}
-              onClick={() => setSelectedProject(project)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  setSelectedProject(project);
-                }
-              }}
-              initial={{ opacity: 0, scale: 0.95, y: 16 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.35, delay: index * 0.08, ease: "easeOut" }}
-              className="group shrink-0 w-64 border border-gray-200 rounded-lg p-4 flex flex-col gap-3
-                         snap-start hover:scale-[1.04] hover:-translate-y-1 hover:shadow-lg
-                         hover:border-[#b0a86a] transition-all duration-200 bg-white
-                         cursor-pointer text-left"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="text-sm font-semibold text-gray-900">{project.name}</h3>
-                <div className="flex gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
-                  {project.repo && (
-                    <a
-                      href={project.repo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${project.name} source code`}
-                      className="text-gray-400 hover:text-[#3d4a1a] transition-colors"
-                    >
-                      <GithubIcon />
-                    </a>
-                  )}
-                  {project.url && (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${project.name} live site`}
-                      className="text-gray-400 hover:text-[#3d4a1a] transition-colors"
-                    >
-                      <ExternalLinkIcon />
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              <p className="text-sm text-gray-600 leading-relaxed line-clamp-5 min-h-0">{project.description}</p>
-
-              <div className="flex flex-wrap gap-1.5">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <span className="mt-auto pt-1 text-xs font-medium text-[#556128] group-hover:text-[#3d4a1a] transition-colors">
-                View details →
-              </span>
-            </motion.article>
+              project={project}
+              index={index}
+              onSelect={setSelectedProject}
+            />
           ))}
         </div>
 
         {canScrollLeft && (
-          <div className="absolute left-0 top-0 bottom-3 w-16 flex items-center justify-start bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                scrollBy("left");
-              }}
-              aria-label="Scroll projects left"
-              className="ml-1 p-1.5 rounded-full bg-white border border-gray-200 shadow-sm text-gray-500
-                         hover:text-[#3d4a1a] hover:border-[#b0a86a] transition-colors pointer-events-auto"
-            >
-              <ChevronLeftIcon />
-            </button>
+          <div className="pointer-events-none absolute left-0 top-0 bottom-3 z-30 flex w-16 items-center justify-start bg-gradient-to-r from-white via-white/80 to-transparent">
+            <div className="pointer-events-auto ml-1">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  scrollBy("left");
+                }}
+                aria-label="Scroll projects left"
+                className="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 text-gray-500 shadow-sm transition-colors hover:border-[#b0a86a] hover:text-[#3d4a1a]"
+              >
+                <ChevronLeftIcon />
+              </button>
+            </div>
           </div>
         )}
 
         {canScrollRight && (
-          <div className="absolute right-0 top-0 bottom-3 w-16 flex items-center justify-end bg-gradient-to-l from-white via-white/80 to-transparent pointer-events-none">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                scrollBy("right");
-              }}
-              aria-label="Scroll projects right"
-              className="mr-1 p-1.5 rounded-full bg-white border border-gray-200 shadow-sm text-gray-500
-                         hover:text-[#3d4a1a] hover:border-[#b0a86a] transition-colors pointer-events-auto"
-            >
-              <ChevronRightIcon />
-            </button>
+          <div className="pointer-events-none absolute right-0 top-0 bottom-3 z-30 flex w-16 items-center justify-end bg-gradient-to-l from-white via-white/80 to-transparent">
+            <div className="pointer-events-auto mr-1">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  scrollBy("right");
+                }}
+                aria-label="Scroll projects right"
+                className="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 text-gray-500 shadow-sm transition-colors hover:border-[#b0a86a] hover:text-[#3d4a1a]"
+              >
+                <ChevronRightIcon />
+              </button>
+            </div>
           </div>
         )}
       </div>

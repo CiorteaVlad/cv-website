@@ -15,10 +15,91 @@ interface Props {
 
 const avatarSize = 112;
 
-const chipClass =
-  "flex items-center gap-1.5 border border-gray-200 rounded-lg px-3 py-1.5 " +
-  "text-sm text-gray-600 bg-white hover:scale-105 hover:border-[#b0a86a] " +
-  "hover:shadow-sm hover:text-[#3d4a1a] transition-all duration-150 cursor-pointer select-none";
+const chipInteractive =
+  "relative overflow-hidden flex items-center gap-1.5 border border-gray-200 rounded-lg px-3 py-1.5 " +
+  "text-sm text-gray-600 bg-white hover:border-[#b0a86a] hover:shadow-sm hover:text-[#3d4a1a] " +
+  "transition-all duration-150 cursor-pointer select-none";
+
+function ChipLink({
+  children,
+  className = "",
+  ...props
+}: Omit<React.ComponentPropsWithoutRef<typeof motion.a>, "children"> & {
+  children: React.ReactNode;
+}) {
+  return (
+    <motion.a
+      {...props}
+      className={`${chipInteractive} ${className}`}
+      initial="rest"
+      whileHover="hover"
+      variants={{ rest: {}, hover: {} }}
+    >
+      <motion.span
+        className="absolute inset-0 z-0 bg-[#edf0e0]"
+        aria-hidden
+        variants={{
+          rest: { x: "-100%" },
+          hover: { x: "0%" },
+        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+      />
+      <span className="relative z-10 inline-flex items-center gap-1.5">{children}</span>
+    </motion.a>
+  );
+}
+
+function ChipButton({
+  children,
+  className = "",
+  ...props
+}: Omit<React.ComponentPropsWithoutRef<typeof motion.button>, "children" | "type"> & {
+  children: React.ReactNode;
+}) {
+  return (
+    <motion.button
+      {...props}
+      type="button"
+      className={`${chipInteractive} ${className}`}
+      initial="rest"
+      whileHover="hover"
+      variants={{ rest: {}, hover: {} }}
+    >
+      <motion.span
+        className="absolute inset-0 z-0 bg-[#edf0e0]"
+        aria-hidden
+        variants={{
+          rest: { x: "-100%" },
+          hover: { x: "0%" },
+        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+      />
+      <span className="relative z-10 inline-flex items-center gap-1.5">{children}</span>
+    </motion.button>
+  );
+}
+
+function ChipStatic({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      className={chipInteractive}
+      initial="rest"
+      whileHover="hover"
+      variants={{ rest: {}, hover: {} }}
+    >
+      <motion.span
+        className="absolute inset-0 z-0 bg-[#edf0e0]"
+        aria-hidden
+        variants={{
+          rest: { x: "-100%" },
+          hover: { x: "0%" },
+        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+      />
+      <span className="relative z-10 inline-flex items-center gap-1.5">{children}</span>
+    </motion.div>
+  );
+}
 
 export default function Header({ name, title, photo, contact, cvPdfPath }: Props) {
   const downloadFileName = `${name.replace(/[^\w\s-]/g, "").replace(/\s+/g, "-")}-CV.pdf`;
@@ -100,70 +181,64 @@ export default function Header({ name, title, photo, contact, cvPdfPath }: Props
         <ul className="mt-6 flex flex-wrap justify-center gap-2">
         {contact.email && (
           <li key="email">
-            <a href={`mailto:${contact.email}`} className={chipClass}>
+            <ChipLink href={`mailto:${contact.email}`}>
               <EmailIcon />
               {contact.email}
-            </a>
+            </ChipLink>
           </li>
         )}
 
         {contact.phone && (
           <li key="phone">
-            <a
+            <ChipLink
               href={`tel:${contact.phone.replace(/\s/g, "")}`}
-              className={chipClass}
               aria-label={`Phone ${contact.phone}`}
             >
               <PhoneIcon />
               {contact.phone}
-            </a>
+            </ChipLink>
           </li>
         )}
 
         <li key="download-cv">
           {cvPdfPath ? (
-            <a
-              href={cvPdfPath}
-              download={downloadFileName}
-              className={chipClass}
-            >
+            <ChipLink href={cvPdfPath} download={downloadFileName}>
               <DownloadIcon />
               Download CV
-            </a>
+            </ChipLink>
           ) : (
-            <button
-              type="button"
+            <ChipButton
               onClick={() => window.print()}
-              className={chipClass}
               title="Opens the print dialog — choose Save as PDF to download your CV"
               aria-label="Download CV — opens print dialog; use Save as PDF"
             >
               <DownloadIcon />
               Download CV
-            </button>
+            </ChipButton>
           )}
         </li>
 
         {chips.map(({ icon, label, href, external }) => {
           if (!href) {
             return (
-              <li key={label} className={chipClass}>
-                {icon}
-                {label}
+              <li key={label}>
+                <ChipStatic>
+                  {icon}
+                  {label}
+                </ChipStatic>
               </li>
             );
           }
 
           return (
             <li key={label}>
-              <a
+              <ChipLink
                 href={href}
                 {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className={chipClass}
               >
                 {icon}
                 {label}
-              </a>
+              </ChipLink>
             </li>
           );
         })}

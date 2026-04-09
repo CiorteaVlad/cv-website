@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import type { ExperienceItem } from "@/types/cv";
 import FadeIn from "@/components/FadeIn";
@@ -26,10 +27,30 @@ function ExperienceArticle({ item }: { item: ExperienceItem }) {
 
       <ul className="mt-3 space-y-1.5">
         {item.bullets.map((bullet, j) => (
-          <li key={j} className="flex gap-2.5 text-sm text-gray-700 leading-relaxed">
-            <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#7a8f3a] shrink-0" aria-hidden="true" />
-            {bullet}
-          </li>
+          <motion.li
+            key={j}
+            className="flex gap-2.5 text-sm leading-relaxed"
+            initial="rest"
+            whileHover="hover"
+            variants={{ rest: {}, hover: {} }}
+          >
+            <motion.span
+              className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#7a8f3a] shrink-0"
+              aria-hidden="true"
+              variants={{ rest: { x: 0 }, hover: { x: 4 } }}
+              transition={{ duration: 0.15 }}
+            />
+            <motion.span
+              className="inline text-gray-700"
+              variants={{
+                rest: { color: "rgb(55 65 81)" },
+                hover: { color: "rgb(61 74 26)" },
+              }}
+              transition={{ duration: 0.15 }}
+            >
+              {bullet}
+            </motion.span>
+          </motion.li>
         ))}
       </ul>
     </>

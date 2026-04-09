@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import type { SkillGroup } from "@/types/cv";
 import FadeIn from "@/components/FadeIn";
 import SectionHeading from "@/components/SectionHeading";
@@ -11,14 +12,30 @@ interface Props {
 }
 
 function ProficiencyBar({ level }: { level: number }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-60px" });
+  const [printReady, setPrintReady] = useState(false);
+  const targetPct = level * 10;
+
+  useEffect(() => {
+    const beforePrint = () => setPrintReady(true);
+    window.addEventListener("beforeprint", beforePrint);
+    return () => window.removeEventListener("beforeprint", beforePrint);
+  }, []);
+
+  const showFill = isInView || printReady;
+
   return (
     <div
+      ref={containerRef}
       className="w-24 h-1.5 rounded-full bg-[#edf0e0] overflow-hidden"
       aria-label={`Proficiency: ${level} out of 10`}
     >
-      <div
+      <motion.div
         className="h-full rounded-full bg-[#d4a017]"
-        style={{ width: `${level * 10}%` }}
+        initial={{ width: "0%" }}
+        animate={{ width: showFill ? `${targetPct}%` : "0%" }}
+        transition={{ type: "spring", stiffness: 60, damping: 18, delay: 0.1 }}
       />
     </div>
   );
@@ -26,7 +43,11 @@ function ProficiencyBar({ level }: { level: number }) {
 
 function SkillGroupCard({ group }: { group: SkillGroup }) {
   return (
-    <div className="rounded-xl border border-[#d4ceaa]/80 bg-gradient-to-b from-[#edf0e0]/40 to-white p-4 sm:p-5 shadow-sm print:border-gray-200 print:shadow-none print:bg-white">
+    <motion.div
+      className="rounded-xl border border-[#d4ceaa]/80 bg-gradient-to-b from-[#edf0e0]/40 to-white p-4 sm:p-5 shadow-sm print:border-gray-200 print:shadow-none print:bg-white print:translate-y-0"
+      whileHover={{ y: -4, boxShadow: "0 8px 24px rgba(61,74,26,0.12)" }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+    >
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <span className="inline-flex w-fit items-center rounded-md bg-[#e8c56a] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#3d4a1a] ring-1 ring-inset ring-[#c5bc8a]/80">
           {group.category}
@@ -51,7 +72,7 @@ function SkillGroupCard({ group }: { group: SkillGroup }) {
           </span>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

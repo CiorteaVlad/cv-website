@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { LayoutGroup, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
@@ -80,20 +80,29 @@ export default function Navbar() {
         >
           VC
         </a>
-        {NAV_LINKS.map(({ label, id }) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            className={
-              "px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-150 " +
-              (active === id
-                ? "text-[#3d4a1a] bg-[#edf0e0]"
-                : "text-gray-500 hover:text-gray-900 hover:bg-gray-100")
-            }
-          >
-            {label}
-          </a>
-        ))}
+        <LayoutGroup>
+          {NAV_LINKS.map(({ label, id }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              className={
+                "relative z-0 inline-block px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-150 " +
+                (active === id
+                  ? "text-[#3d4a1a]"
+                  : "text-gray-500 hover:text-gray-900 hover:bg-gray-100")
+              }
+            >
+              {active === id && (
+                <motion.span
+                  layoutId="nav-pill"
+                  className="absolute inset-0 rounded-md bg-[#edf0e0] -z-10"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10">{label}</span>
+            </a>
+          ))}
+        </LayoutGroup>
       </div>
     </motion.nav>
   );
