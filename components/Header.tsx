@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import type { CVConfig } from "@/types/cv";
 
@@ -21,7 +20,6 @@ const chipClass =
 
 export default function Header({ name, title, photo, contact, cvPdfPath }: Props) {
   const downloadFileName = `${name.replace(/[^\w\s-]/g, "").replace(/\s+/g, "-")}-CV.pdf`;
-  const [phoneRevealed, setPhoneRevealed] = useState(false);
 
   const chips = [
     contact.location && {
@@ -100,17 +98,14 @@ export default function Header({ name, title, photo, contact, cvPdfPath }: Props
 
         {contact.phone && (
           <li key="phone">
-            <button
-              type="button"
-              onClick={() => setPhoneRevealed((r) => !r)}
+            <a
+              href={`tel:${contact.phone.replace(/\s/g, "")}`}
               className={chipClass}
-              aria-expanded={phoneRevealed}
-              aria-label={phoneRevealed ? "Hide phone number" : "Show phone number"}
+              aria-label={`Phone ${contact.phone}`}
             >
               <PhoneIcon />
-              <span className="print:hidden">{phoneRevealed ? contact.phone : "XXXX-XXX-XXX"}</span>
-              <span className="hidden print:inline">{contact.phone}</span>
-            </button>
+              {contact.phone}
+            </a>
           </li>
         )}
 
