@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import type { SkillGroup } from "@/types/cv";
+import FadeIn from "@/components/FadeIn";
 import SectionHeading from "@/components/SectionHeading";
 import { sectionFrameClass, sectionScrollMarginClass } from "@/lib/sectionFrame";
 
@@ -9,57 +10,25 @@ interface Props {
   skills: SkillGroup[];
 }
 
-/** Indigo scale from light to dark (matches page accent); position 1–10 */
-function indigoFill(position: number): string {
-  const l = Math.round(92 - (position - 1) * (92 - 28) / 9);
-  return `hsl(239 84% ${l}%)`;
-}
-
 function ProficiencyBar({ level }: { level: number }) {
   return (
     <div
-      className="flex items-center gap-1.5"
+      className="w-24 h-1.5 rounded-full bg-[#edf0e0] overflow-hidden"
       aria-label={`Proficiency: ${level} out of 10`}
     >
-      <span className="text-xs font-semibold tabular-nums text-indigo-700 shrink-0">
-        {level}/10
-      </span>
-      <div className="flex items-center gap-1">
-        {Array.from({ length: 10 }, (_, i) => {
-          const pos = i + 1;
-          const filled = pos <= level;
-          return (
-            <span
-              key={pos}
-              className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-sm inline-block shrink-0 transition-colors"
-              style={
-                filled
-                  ? {
-                      backgroundColor: indigoFill(pos),
-                      borderColor: indigoFill(pos),
-                      borderWidth: "1px",
-                      borderStyle: "solid",
-                    }
-                  : {
-                      backgroundColor: "white",
-                      borderColor: "rgb(199 210 254)",
-                      borderWidth: "1px",
-                      borderStyle: "solid",
-                    }
-              }
-            />
-          );
-        })}
-      </div>
+      <div
+        className="h-full rounded-full bg-[#d4a017]"
+        style={{ width: `${level * 10}%` }}
+      />
     </div>
   );
 }
 
 function SkillGroupCard({ group }: { group: SkillGroup }) {
   return (
-    <div className="rounded-xl border border-indigo-100/80 bg-gradient-to-b from-indigo-50/40 to-white p-4 sm:p-5 shadow-sm print:border-gray-200 print:shadow-none print:bg-white">
+    <div className="rounded-xl border border-[#d4ceaa]/80 bg-gradient-to-b from-[#edf0e0]/40 to-white p-4 sm:p-5 shadow-sm print:border-gray-200 print:shadow-none print:bg-white">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-        <span className="inline-flex w-fit items-center rounded-md bg-indigo-100 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-indigo-800 ring-1 ring-inset ring-indigo-200/80">
+        <span className="inline-flex w-fit items-center rounded-md bg-[#e8c56a] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#3d4a1a] ring-1 ring-inset ring-[#c5bc8a]/80">
           {group.category}
         </span>
         <div className="sm:shrink-0">
@@ -76,7 +45,7 @@ function SkillGroupCard({ group }: { group: SkillGroup }) {
         {group.items.map((skill) => (
           <span
             key={skill}
-            className="px-2.5 py-1 rounded-full text-xs font-medium bg-white text-indigo-900 border border-indigo-100 shadow-sm print:border-indigo-100"
+            className="px-2.5 py-1 rounded-full text-xs font-medium bg-white text-[#3d4a1a] border border-[#d4ceaa] shadow-sm print:border-gray-300"
           >
             {skill}
           </span>
@@ -87,8 +56,7 @@ function SkillGroupCard({ group }: { group: SkillGroup }) {
 }
 
 const expandButtonClass =
-  "p-1.5 rounded-full bg-white border border-gray-200 shadow-sm text-gray-500 " +
-  "hover:text-indigo-700 hover:border-indigo-300 transition-colors";
+  "flex items-center gap-1.5 text-sm font-medium text-[#3d4a1a] hover:text-[#2a3312] transition-colors px-3 py-1.5 rounded-lg hover:bg-[#edf0e0]";
 
 export default function Skills({ skills }: Props) {
   const [expanded, setExpanded] = useState(false);
@@ -115,29 +83,32 @@ export default function Skills({ skills }: Props) {
 
           if (isHidden) {
             return (
-              <div key={group.category} className="hidden print:block">
-                <SkillGroupCard group={group} />
-              </div>
+              <FadeIn key={group.category} delay={i * 0.1}>
+                <div className="hidden print:block">
+                  <SkillGroupCard group={group} />
+                </div>
+              </FadeIn>
             );
           }
 
           return (
-            <div
-              key={group.category}
-              className={
-                isPeek
-                  ? "relative overflow-hidden max-h-[7rem] sm:max-h-[8rem] print:max-h-none print:overflow-visible"
-                  : ""
-              }
-            >
-              <SkillGroupCard group={group} />
-              {isPeek && (
-                <div
-                  className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent print:hidden"
-                  aria-hidden="true"
-                />
-              )}
-            </div>
+            <FadeIn key={group.category} delay={i * 0.1}>
+              <div
+                className={
+                  isPeek
+                    ? "relative overflow-hidden max-h-[7rem] sm:max-h-[8rem] print:max-h-none print:overflow-visible"
+                    : ""
+                }
+              >
+                <SkillGroupCard group={group} />
+                {isPeek && (
+                  <div
+                    className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent print:hidden"
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
+            </FadeIn>
           );
         })}
       </div>
@@ -152,6 +123,7 @@ export default function Skills({ skills }: Props) {
               aria-label="Show more skills"
               className={expandButtonClass}
             >
+              <span>Show more</span>
               <ChevronDownIcon />
             </button>
           ) : (
@@ -162,6 +134,7 @@ export default function Skills({ skills }: Props) {
               aria-label="Show less skills"
               className={expandButtonClass}
             >
+              <span>Show less</span>
               <ChevronUpIcon />
             </button>
           )}

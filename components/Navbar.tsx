@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
@@ -66,8 +67,19 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200 print:hidden">
+    <motion.nav
+      initial={{ opacity: 0, y: -16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200 print:hidden"
+    >
       <div className="max-w-5xl mx-auto px-6 flex items-center gap-1 h-12">
+        <a
+          href="#"
+          className="mr-auto text-sm font-bold text-gray-800 tracking-tight hover:text-[#3d4a1a] transition-colors"
+        >
+          VC
+        </a>
         {NAV_LINKS.map(({ label, id }) => (
           <a
             key={id}
@@ -75,7 +87,7 @@ export default function Navbar() {
             className={
               "px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-150 " +
               (active === id
-                ? "text-indigo-700 bg-indigo-50"
+                ? "text-[#3d4a1a] bg-[#edf0e0]"
                 : "text-gray-500 hover:text-gray-900 hover:bg-gray-100")
             }
           >
@@ -83,6 +95,6 @@ export default function Navbar() {
           </a>
         ))}
       </div>
-    </nav>
+    </motion.nav>
   );
 }

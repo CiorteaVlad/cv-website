@@ -2,6 +2,13 @@
 
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-brand: #3d4a1a;
+  --color-brand-light: #556128;
+  --color-brand-muted: #7a8f3a;
+  --color-brand-tint: #edf0e0;
+  --color-accent: #d4a017;
+  --color-accent-light: #e8c56a;
+  --color-accent-tint: #fdf6d8;
 }
 
 /* ── Base ── */
@@ -18,7 +25,7 @@ html {
 }
 
 body {
-  background-color: #f9fafb;
+  background: #ffffff;
   color: #111827;
   font-family: var(--font-sans);
 }

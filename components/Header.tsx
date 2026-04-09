@@ -1,6 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Image from "next/image";
+import FadeIn from "@/components/FadeIn";
 import type { CVConfig } from "@/types/cv";
 
 interface Props {
@@ -15,8 +17,8 @@ const avatarSize = 112;
 
 const chipClass =
   "flex items-center gap-1.5 border border-gray-200 rounded-lg px-3 py-1.5 " +
-  "text-sm text-gray-600 bg-white hover:scale-105 hover:border-indigo-300 " +
-  "hover:shadow-sm hover:text-indigo-700 transition-all duration-150 cursor-pointer select-none";
+  "text-sm text-gray-600 bg-white hover:scale-105 hover:border-[#b0a86a] " +
+  "hover:shadow-sm hover:text-[#3d4a1a] transition-all duration-150 cursor-pointer select-none";
 
 export default function Header({ name, title, photo, contact, cvPdfPath }: Props) {
   const downloadFileName = `${name.replace(/[^\w\s-]/g, "").replace(/\s+/g, "-")}-CV.pdf`;
@@ -59,34 +61,43 @@ export default function Header({ name, title, photo, contact, cvPdfPath }: Props
   }[];
 
   return (
-    <header className="border-b border-gray-200 pb-8 mb-10 print:pb-5 print:mb-7">
+    <motion.header
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="border-b border-gray-200 pb-8 mb-10 print:pb-5 print:mb-7"
+    >
       <div className="flex flex-col items-center text-center">
-        <div className="mb-5 shrink-0">
+        <FadeIn delay={0} className="mb-5 shrink-0">
           {photo ? (
             <Image
               src={photo}
               alt={`${name} profile photo`}
               width={avatarSize}
               height={avatarSize}
-              className="rounded-full object-cover object-[50%_30%] ring-2 ring-indigo-100 shadow-sm mx-auto h-[112px] w-[112px]"
+              className="rounded-full object-cover object-[50%_30%] ring-2 ring-[#d4ceaa] shadow-sm mx-auto h-[112px] w-[112px]"
               priority
             />
           ) : (
             <div
-              className="mx-auto flex h-[112px] w-[112px] items-center justify-center rounded-full border-2 border-dashed border-indigo-200 bg-indigo-50/50 text-xs font-medium text-indigo-400 ring-2 ring-indigo-100/80"
+              className="mx-auto flex h-[112px] w-[112px] items-center justify-center rounded-full border-2 border-dashed border-[#c5bc8a] bg-[#edf0e0]/50 text-xs font-medium text-[#7a8f3a] ring-2 ring-[#d4ceaa]/80"
               role="img"
               aria-label="Profile photo placeholder — add photo in cv.config.ts and public folder"
             >
               Photo
             </div>
           )}
-        </div>
+        </FadeIn>
 
-        <h1 className="text-4xl font-bold text-gray-900 tracking-tight">{name}</h1>
-        <p className="mt-2 max-w-xl text-lg text-indigo-700 font-medium leading-snug">{title}</p>
+        <FadeIn delay={0.1}>
+          <h1 className="text-4xl font-bold text-gray-900 tracking-tight">{name}</h1>
+        </FadeIn>
+        <FadeIn delay={0.2}>
+          <p className="mt-2 max-w-xl text-lg text-[#3d4a1a] font-medium leading-snug">{title}</p>
+        </FadeIn>
       </div>
 
-      <ul className="mt-6 flex flex-wrap justify-center gap-2">
+      <FadeIn delay={0.3}>
+        <ul className="mt-6 flex flex-wrap justify-center gap-2">
         {contact.email && (
           <li key="email">
             <a href={`mailto:${contact.email}`} className={chipClass}>
@@ -156,8 +167,9 @@ export default function Header({ name, title, photo, contact, cvPdfPath }: Props
             </li>
           );
         })}
-      </ul>
-    </header>
+        </ul>
+      </FadeIn>
+    </motion.header>
   );
 }
 

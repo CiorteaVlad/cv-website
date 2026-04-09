@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { motion } from "framer-motion";
 import type { ProjectItem } from "@/types/cv";
 import SectionHeading from "@/components/SectionHeading";
 import { sectionFrameClass, sectionScrollMarginClass } from "@/lib/sectionFrame";
@@ -63,8 +64,8 @@ export default function Projects({ projects }: Props) {
           className="flex gap-4 overflow-x-auto pb-3 scroll-smooth snap-x snap-mandatory
                      [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          {projects.map((project) => (
-            <article
+          {projects.map((project, index) => (
+            <motion.article
               key={project.name}
               role="button"
               tabIndex={0}
@@ -75,9 +76,13 @@ export default function Projects({ projects }: Props) {
                   setSelectedProject(project);
                 }
               }}
-              className="shrink-0 w-64 border border-gray-200 rounded-lg p-4 flex flex-col gap-3
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: index * 0.08, ease: "easeOut" }}
+              className="group shrink-0 w-64 border border-gray-200 rounded-lg p-4 flex flex-col gap-3
                          snap-start hover:scale-[1.04] hover:-translate-y-1 hover:shadow-lg
-                         hover:border-indigo-300 transition-all duration-200 bg-white
+                         hover:border-[#b0a86a] transition-all duration-200 bg-white
                          cursor-pointer text-left"
             >
               <div className="flex items-start justify-between gap-2">
@@ -89,7 +94,7 @@ export default function Projects({ projects }: Props) {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${project.name} source code`}
-                      className="text-gray-400 hover:text-indigo-700 transition-colors"
+                      className="text-gray-400 hover:text-[#3d4a1a] transition-colors"
                     >
                       <GithubIcon />
                     </a>
@@ -100,7 +105,7 @@ export default function Projects({ projects }: Props) {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${project.name} live site`}
-                      className="text-gray-400 hover:text-indigo-700 transition-colors"
+                      className="text-gray-400 hover:text-[#3d4a1a] transition-colors"
                     >
                       <ExternalLinkIcon />
                     </a>
@@ -120,7 +125,11 @@ export default function Projects({ projects }: Props) {
                   </span>
                 ))}
               </div>
-            </article>
+
+              <span className="mt-auto pt-1 text-xs font-medium text-[#556128] group-hover:text-[#3d4a1a] transition-colors">
+                View details →
+              </span>
+            </motion.article>
           ))}
         </div>
 
@@ -134,7 +143,7 @@ export default function Projects({ projects }: Props) {
               }}
               aria-label="Scroll projects left"
               className="ml-1 p-1.5 rounded-full bg-white border border-gray-200 shadow-sm text-gray-500
-                         hover:text-indigo-700 hover:border-indigo-300 transition-colors pointer-events-auto"
+                         hover:text-[#3d4a1a] hover:border-[#b0a86a] transition-colors pointer-events-auto"
             >
               <ChevronLeftIcon />
             </button>
@@ -151,7 +160,7 @@ export default function Projects({ projects }: Props) {
               }}
               aria-label="Scroll projects right"
               className="mr-1 p-1.5 rounded-full bg-white border border-gray-200 shadow-sm text-gray-500
-                         hover:text-indigo-700 hover:border-indigo-300 transition-colors pointer-events-auto"
+                         hover:text-[#3d4a1a] hover:border-[#b0a86a] transition-colors pointer-events-auto"
             >
               <ChevronRightIcon />
             </button>
@@ -161,7 +170,7 @@ export default function Projects({ projects }: Props) {
 
       {selectedProject && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 print:hidden"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm print:hidden"
           onClick={() => setSelectedProject(null)}
           role="presentation"
         >
@@ -188,14 +197,14 @@ export default function Projects({ projects }: Props) {
             <p className="mt-4 text-sm text-gray-600 leading-relaxed">{selectedProject.description}</p>
 
             <div className="mt-6">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-indigo-700 mb-3">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-[#3d4a1a] mb-3">
                 Skills used
               </h3>
               <div className="flex flex-wrap gap-2">
                 {selectedProject.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-800 border border-indigo-100"
+                    className="px-2.5 py-1 rounded-full text-xs font-medium bg-[#edf0e0] text-[#3d4a1a] border border-[#d4ceaa]"
                   >
                     {tag}
                   </span>
@@ -210,7 +219,7 @@ export default function Projects({ projects }: Props) {
                     href={selectedProject.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-medium text-indigo-700 hover:underline"
+                    className="text-sm font-medium text-[#3d4a1a] hover:underline"
                   >
                     Visit site
                   </a>
@@ -220,7 +229,7 @@ export default function Projects({ projects }: Props) {
                     href={selectedProject.repo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-medium text-indigo-700 hover:underline"
+                    className="text-sm font-medium text-[#3d4a1a] hover:underline"
                   >
                     View repository
                   </a>
