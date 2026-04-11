@@ -20,76 +20,53 @@ export const cv: CVConfig = {
     "manual testing, stakeholder communication, team alignment, and mentoring. Well suited for Senior " +
     "Manual QA, Scrum Master, Product Owner, and QA coordination roles.",
 
-  experience: [
-    {
-      company: "MESH",
-      role: "Lead QA Engineer / Scrum Master / Project Manager",
-      period: "Oct 2024 – Jan 2026",
-      location: "Cluj-Napoca, Romania",
-      bullets: [
-        "Led end-to-end QA for an iOS meditation app, web presentation platform, admin panel, and backend APIs.",
-        "Performed functional, integration, regression, smoke, sanity, exploratory, acceptance, API, payment, notification, and AI-related testing.",
-        "Wrote and maintained test cases, smoke suites, and Confluence documentation to improve release readiness.",
-        "Facilitated standups, sprint planning, reviews, retrospectives, and backlog refinement across a cross-functional team.",
-        "Coordinated 5 developers, 1 designer, a product owner, and stakeholders to keep delivery aligned with the roadmap.",
-        "Switched the team from Scrum to Kanban to better match workflow and delivery needs.",
-        "Improved Jira workflows and reorganized Slack channels to streamline communication and task visibility.",
-        "Reduced escaped defects by introducing testing checkpoints after each completed story.",
-        "Trained a junior tester from zero QA experience to independent feature testing and bug reporting.",
-      ],
-    },
-    {
-      company: "Cognizant",
-      role: "Senior QA Engineer",
-      period: "Aug 2019 – Mar 2026",
-      location: "Cluj-Napoca, Romania",
-      bullets: [
-        "Tested a healthcare communication platform used by hospital staff for critical alerts, VoIP calls, chat, and directory navigation.",
-        "Covered Android apps, web admin, backend services, APIs, audit flows, and database validation.",
-        "Performed functional, integration, regression, exploratory, smoke, sanity, API, backend, server, and web testing.",
-        "Specialized in VoIP/SIP testing and complex system integrations.",
-        "Handled production incidents and urgent releases in a high-impact healthcare environment.",
-        "Created and reviewed test cases to improve coverage and speed up repeatable validation flows.",
-        "Reviewed specifications early to identify risks, inconsistencies, and blockers before execution.",
-        "Acted as QA lead in the lead’s absence, coordinating team tasks, reporting progress, and maintaining testing velocity.",
-        "Coordinated device validation and OS validation cycles across multiple test scenarios.",
-        "Mentored new colleagues and supported senior teammates on feature areas requiring deeper product knowledge.",
-        "Participated in estimations, spec reviews, stakeholder meetings, and day-end planning when covering lead responsibilities.",
-        "Supported a product used by 150k+ users with stable latest releases and no major visible defects.",
-      ],
-    },
-    {
-      company: "Tapptitude",
-      role: "Senior QA Engineer",
-      period: "Aug 2017 – Aug 2019",
-      location: "Cluj-Napoca, Romania",
-      bullets: [
-        "Tested 10+ client projects across iOS, Android, and web platforms.",
-        "Owned the QA process on most projects as the sole QA engineer.",
-        "Performed functional, integration, regression, acceptance, AB, exploratory, smoke, sanity, API, and backend testing.",
-        "Wrote and maintained test cases to support coverage and repeatable execution.",
-        "Identified risks early and reported bugs, blockers, and release concerns clearly.",
-        "Mentored new colleagues and supported onboarding into QA practices and team workflows.",
-        "Conducted technical interviews for QA candidates.",
-        "Explored automation concepts at POC level during early career development.",
-        "Delivered quality validation for a streaming app designed to support 100k+ users in a short time window.",
-      ],
-    },
-    {
-      company: "Gameloft",
-      role: "QA Engineer → Senior QA Engineer",
-      period: "Feb 2016 – Aug 2017",
-      location: "Cluj-Napoca, Romania",
-      bullets: [
-        "Tested iOS versions of mobile games including Blacklist Conspiracy, Dungeon Hunter, and Asphalt.",
-        "Performed functional, regression, acceptance, AB, exploratory, localization, performance, stress, and compatibility testing.",
-        "Logged and tracked defects using Bugzilla, Trello, and internal tools through release cycles.",
-        "Promoted to Senior QA within 1.5 years and took ownership of task assignment and daily reporting.",
-        "Trained new team members on testing workflows, tools, and project expectations.",
-        "Supported successful game releases through consistent device-based quality validation.",
-      ],
-    },
-  ],
+    experience: [
+      {
+        company: "MESH",
+        role: "Lead QA Engineer / Scrum Master / Project Manager",
+        period: "Oct 2024 – Jan 2026",
+        location: "Dubai, UAE",
+        bullets: [
+          "Served as the sole QA engineer and Scrum coordinator for a small cross-functional team, staying involved from early concept and risk assessment through feature delivery and app launch",
+          "Covered the full product surface — iOS app, web platform, admin panel, and backend APIs — across all testing types, from exploratory and functional to API, payment, and AI-related flows",
+          "Worked closely with the product owner and stakeholders to keep delivery aligned, facilitated all Scrum ceremonies, and transitioned the team to Kanban when it better matched the workflow",
+          "Mentored a junior tester from no prior QA experience to independently owning feature testing and bug reporting",
+        ],
+      },
+      {
+        company: "Cognizant",
+        role: "Senior QA Engineer",
+        period: "Aug 2019 – Mar 2026",
+        location: "Cluj-Napoca, Romania",
+        bullets: [
+          "Long-term QA specialist on a technically complex healthcare communication platform used by 150k+ hospital staff, covering Android, web admin, backend services, APIs, audit flows, and database validation",
+          "Built deep product knowledge over 6+ years, becoming a go-to resource for VoIP/SIP testing, complex system integrations, and high-risk scenarios that required thorough understanding of the platform",
+          "Handled production incidents and urgent releases in an environment where quality directly affected clinical operations",
+          "Stepped into full QA lead responsibilities during absences — coordinating the team, fielding questions and providing direction, owning device and OS validation cycles, and representing QA in estimations, backlog refinements, bug prioritisation meetings, and client status calls",
+        ],
+      },
+      {
+        company: "Tapptitude",
+        role: "Senior QA Engineer",
+        period: "Aug 2017 – Aug 2019",
+        location: "Cluj-Napoca, Romania",
+        bullets: [
+          "Managed manual QA across multiple concurrent client projects in a fast-paced agency environment, covering iOS, Android, and web as the sole QA engineer on most engagements",
+          "Handled the full testing cycle independently across multiple simultaneous projects — from risk identification and test case writing through execution, bug reporting, and release sign-off",
+          "Conducted technical interviews for QA candidates and mentored new team members joining the QA practice",
+        ],
+      },
+      {
+        company: "Gameloft",
+        role: "QA Engineer → Senior QA Engineer",
+        period: "Feb 2016 – Aug 2017",
+        location: "Cluj-Napoca, Romania",
+        bullets: [
+          "Started as a Junior QA Engineer testing iOS mobile games across a wide range of Apple devices — iPhone, iPad, iPod, and Apple TV — working within a structured Waterfall delivery process",
+          "Promoted to Senior QA Engineer within 1.5 years, taking on task assignment, daily reporting, and onboarding of new team members while maintaining full QA responsibilities",
+        ],
+      },
+    ],
 
   skills: [
     {
