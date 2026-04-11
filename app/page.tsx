@@ -22,8 +22,8 @@ export default function Home() {
         />
         <Summary summary={cv.summary} />
         <Experience experience={cv.experience} />
-        <Skills skills={cv.skills} />
         <Projects projects={cv.projects} />
+        <Skills skills={cv.skills} />
         <Education education={cv.education} />
         <Footer name={cv.name} contact={cv.contact} />
       </main>
