@@ -3,11 +3,12 @@
 import { LayoutGroup, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+/** Order must match section order in the document (top → bottom) so scroll spy picks the correct active link. */
 const NAV_LINKS = [
   { label: "About", id: "about" },
   { label: "Experience", id: "experience" },
-  { label: "Skills", id: "skills" },
   { label: "Projects", id: "projects" },
+  { label: "Skills", id: "skills" },
   { label: "Education", id: "education" },
 ] as const;
 
