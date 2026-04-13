@@ -10,6 +10,16 @@ interface Props {
   projects: ProjectItem[];
 }
 
+const projectCardVariants = {
+  hidden: { opacity: 0, scale: 0.95, y: 16 },
+  show: (i: number) => ({
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { duration: 0.35, delay: i * 0.08, ease: "easeOut" as const },
+  }),
+};
+
 function ProjectCard({
   project,
   index,
@@ -34,13 +44,16 @@ function ProjectCard({
       }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      initial={{ opacity: 0, scale: 0.95, y: 16 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      custom={index}
+      variants={projectCardVariants}
+      initial="hidden"
+      whileInView="show"
       viewport={{ once: true }}
-      transition={{ duration: 0.35, delay: index * 0.08, ease: "easeOut" }}
       whileHover={{
+        scale: 1.03,
         boxShadow: "0 8px 24px rgba(61,74,26,0.10)",
         borderColor: "#b0a86a",
+        transition: { duration: 0.2, ease: "easeOut" },
       }}
       className="group relative overflow-hidden shrink-0 w-64 border border-gray-200 rounded-lg p-4 flex flex-col gap-3
                  snap-start bg-white cursor-pointer text-left"
