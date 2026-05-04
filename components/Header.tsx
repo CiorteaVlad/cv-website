@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import FadeIn from "@/components/FadeIn";
@@ -181,7 +182,7 @@ export default function Header({ name, title, photo, contact, cvPdfPath }: Props
         <ul className="mt-6 flex flex-wrap justify-center gap-2">
         {contact.email && (
           <li key="email">
-            <ChipLink href={`mailto:${contact.email}`}>
+            <ChipLink href={`mailto:${contact.email}`} onClick={() => track("Email Click")}>
               <EmailIcon />
               {contact.email}
             </ChipLink>
@@ -193,6 +194,7 @@ export default function Header({ name, title, photo, contact, cvPdfPath }: Props
             <ChipLink
               href={`tel:${contact.phone.replace(/\s/g, "")}`}
               aria-label={`Phone ${contact.phone}`}
+              onClick={() => track("Phone Click")}
             >
               <PhoneIcon />
               {contact.phone}
@@ -202,13 +204,20 @@ export default function Header({ name, title, photo, contact, cvPdfPath }: Props
 
         <li key="download-cv">
           {cvPdfPath ? (
-            <ChipLink href={cvPdfPath} download={downloadFileName}>
+            <ChipLink
+              href={cvPdfPath}
+              download={downloadFileName}
+              onClick={() => track("Download CV Click")}
+            >
               <DownloadIcon />
               Download CV
             </ChipLink>
           ) : (
             <ChipButton
-              onClick={() => window.print()}
+              onClick={() => {
+                track("Download CV Click");
+                window.print();
+              }}
               title="Opens the print dialog — choose Save as PDF to download your CV"
               aria-label="Download CV — opens print dialog; use Save as PDF"
             >
@@ -235,6 +244,9 @@ export default function Header({ name, title, photo, contact, cvPdfPath }: Props
               <ChipLink
                 href={href}
                 {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                onClick={() => {
+                  if (label === "LinkedIn") track("LinkedIn Click");
+                }}
               >
                 {icon}
                 {label}

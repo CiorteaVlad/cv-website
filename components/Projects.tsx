@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import type { ProjectItem } from "@/types/cv";
@@ -26,11 +27,11 @@ const projectCardVariants = {
 function ProjectCard({
   project,
   index,
-  onSelect,
+  onOpen,
 }: {
   project: ProjectItem;
   index: number;
-  onSelect: (p: ProjectItem) => void;
+  onOpen: (p: ProjectItem, source: "card" | "details_button") => void;
 }) {
   const [hover, setHover] = useState(false);
   const previewTags = project.tags.slice(0, MAX_TAGS_ON_CARD);
@@ -40,11 +41,11 @@ function ProjectCard({
     <motion.article
       role="button"
       tabIndex={0}
-      onClick={() => onSelect(project)}
+      onClick={() => onOpen(project, "card")}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          onSelect(project);
+          onOpen(project, "card");
         }
       }}
       onMouseEnter={() => setHover(true)}
@@ -124,9 +125,16 @@ function ProjectCard({
           )}
         </div>
 
-        <span className="mt-auto pt-1 text-xs font-medium text-[#556128] group-hover:text-[#3d4a1a] transition-colors">
+        <button
+          type="button"
+          className="mt-auto pt-1 text-xs font-medium text-[#556128] group-hover:text-[#3d4a1a] transition-colors text-left w-full border-0 bg-transparent p-0 cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpen(project, "details_button");
+          }}
+        >
           View details →
-        </span>
+        </button>
       </div>
     </motion.article>
   );
@@ -137,6 +145,11 @@ export default function Projects({ projects }: Props) {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
+
+  const openProjectDetails = useCallback((project: ProjectItem, source: "card" | "details_button") => {
+    track("Project Details Open", { projectName: project.name, source });
+    setSelectedProject(project);
+  }, []);
 
   const checkScroll = useCallback(() => {
     const el = scrollRef.current;
@@ -191,7 +204,7 @@ export default function Projects({ projects }: Props) {
               key={project.name}
               project={project}
               index={index}
-              onSelect={setSelectedProject}
+              onOpen={openProjectDetails}
             />
           ))}
         </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import type { ExperienceItem } from "@/types/cv";
@@ -123,7 +124,10 @@ export default function Experience({ experience }: Props) {
           {!expanded ? (
             <button
               type="button"
-              onClick={() => setExpanded(true)}
+              onClick={() => {
+                track("Section Expand", { section: "Experience", action: "show_more" });
+                setExpanded(true);
+              }}
               aria-expanded={false}
               aria-label="Show more experience"
               className={expandButtonClass}
@@ -134,7 +138,10 @@ export default function Experience({ experience }: Props) {
           ) : (
             <button
               type="button"
-              onClick={collapseAndScrollIntoView}
+              onClick={() => {
+                track("Section Expand", { section: "Experience", action: "show_less" });
+                collapseAndScrollIntoView();
+              }}
               aria-expanded={true}
               aria-label="Show less experience"
               className={expandButtonClass}

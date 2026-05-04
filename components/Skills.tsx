@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import type { SkillGroup } from "@/types/cv";
@@ -139,7 +140,10 @@ export default function Skills({ skills }: Props) {
           {!expanded ? (
             <button
               type="button"
-              onClick={() => setExpanded(true)}
+              onClick={() => {
+                track("Section Expand", { section: "Skills", action: "show_more" });
+                setExpanded(true);
+              }}
               aria-expanded={false}
               aria-label="Show more skills"
               className={expandButtonClass}
@@ -150,7 +154,10 @@ export default function Skills({ skills }: Props) {
           ) : (
             <button
               type="button"
-              onClick={collapseAndScrollIntoView}
+              onClick={() => {
+                track("Section Expand", { section: "Skills", action: "show_less" });
+                collapseAndScrollIntoView();
+              }}
               aria-expanded={true}
               aria-label="Show less skills"
               className={expandButtonClass}
