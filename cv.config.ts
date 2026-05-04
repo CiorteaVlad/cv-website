@@ -139,39 +139,102 @@ export const cv: CVConfig = {
 
   projects: [
     {
-      name: "Healthcare communication platform",
+      name: "Critical Healthcare Communication Platform",
       description:
-        "End-to-end QA for a hospital-critical communication product: Android, web admin, backend, APIs, " +
-        "VoIP/SIP, audit flows, and production incident support. Helped sustain stable releases for 150k+ users.",
-      tags: ["Healthcare", "VoIP", "Android", "API", "QA lead"],
+        "Delivered end-to-end manual QA for a complex healthcare communication platform spanning Android, " +
+        "iOS, web, and admin applications. The product combined VoIP, real-time chat, alert management, " +
+        "live patient monitoring data, and hospital-wide directory workflows, requiring broad cross-platform " +
+        "validation, production incident support, and deep expertise in voice-related testing.",
+      tags: [
+        "Healthcare",
+        "Android",
+        "iOS",
+        "Web",
+        "Admin Panel",
+        "VoIP/SIP",
+        "Real-time Data",
+        "API Testing",
+        "Production Support",
+        "Device Validation",
+        "OS Validation",
+        "QA Coordination",
+      ],
     },
     {
-      name: "MESH wellness suite",
+      name: "AI-Assisted Meditation and Wellness App",
       description:
-        "Lead QA across an iOS meditation app, web presentation layer, admin tooling, and backend APIs. " +
-        "Facilitated Scrum/Kanban ceremonies, coordinated cross-functional delivery, and mentored a junior tester.",
-      tags: ["iOS", "Web", "API", "Scrum", "Kanban"],
+        "Led manual QA for a subscription-based meditation and wellness app built around guided audio/video " +
+        "sessions, AI-assisted reflections, and goal-oriented user journeys. The product combined structured " +
+        "meditation content, themed support for common emotional states, and progress tracking features, " +
+        "while I also coordinated delivery as Scrum Master/Product Owner, working closely with stakeholders " +
+        "on backlog refinement and release readiness.",
+      tags: [
+        "Meditation App",
+        "Wellness",
+        "AI Assisted",
+        "Subscription Content",
+        "Guided Sessions",
+        "Goal Tracking",
+        "Scrum",
+        "Product Ownership",
+        "Manual QA",
+        "Stakeholder Communication",
+      ],
     },
     {
-      name: "Agency & gaming QA",
+      name: "Live Streaming Trivia Platform",
       description:
-        "Sole QA on 10+ client projects (iOS, Android, web) at Tapptitude; iOS game testing and promotion to " +
-        "Senior QA at Gameloft on titles including Asphalt and Dungeon Hunter.",
-      tags: ["Mobile", "iOS", "Android", "Web", "Games"],
+        "Manual QA for a mobile live-streaming trivia platform with scheduled daily contests where hundreds " +
+        "of thousands of users joined a synchronized quiz session for prize money. The contest flow depended " +
+        "on accurate stream timing, question overlays, and a strict response window, so testing focused on " +
+        "real-time behavior, device and OS coverage, and load-sensitive user flows.",
+      tags: [
+        "Live Streaming",
+        "Trivia Game",
+        "Mobile QA",
+        "Manual QA",
+        "Real-time Sync",
+        "High Traffic",
+        "JMeter",
+        "Jira",
+        "Load Testing",
+        "Device Coverage",
+      ],
     },
     {
-      name: "Mock project — API regression suite",
+      name: "Wine Discovery Marketplace",
       description:
-        "Placeholder card for scroll testing. Represents a Postman/Newman collection covering critical REST " +
-        "endpoints, smoke checks, and contract tests against staging environments.",
-      tags: ["Postman", "REST", "Regression", "Mock"],
+        "Manual QA for a premium wine discovery and booking platform where users could explore curated " +
+        "winery profiles, schedule visits, and purchase wines directly. Testing covered the full user journey " +
+        "from profile browsing and content discovery through booking workflows and commerce interactions.",
+      tags: [
+        "Wine Marketplace",
+        "Discovery Platform",
+        "Mobile QA",
+        "Manual QA",
+        "Booking System",
+        "E-commerce",
+        "Winery Profiles",
+        "User Experience",
+      ],
     },
     {
-      name: "Mock project — device lab matrix",
+      name: "Opinion Discovery and Engagement Platform",
       description:
-        "Placeholder card for scroll testing. Represents OS and device coverage matrices, compatibility passes, " +
-        "and release sign-off across iOS and Android builds.",
-      tags: ["Devices", "Compatibility", "Mock", "Mobile"],
+        "Manual QA for a sophisticated mobile platform where users engaged with curated opinion cards through " +
+        "interaction, commenting, and content creation, powered by algorithms that generated personalized " +
+        "statistics and recommendations. Testing validated the full engagement lifecycle from card discovery " +
+        "to algorithmic content delivery.",
+      tags: [
+        "Opinion Platform",
+        "Engagement",
+        "Algorithms",
+        "Mobile QA",
+        "Manual QA",
+        "Content Curation",
+        "User Analytics",
+        "Personalization",
+      ],
     },
   ],
 
