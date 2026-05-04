@@ -10,6 +10,9 @@ interface Props {
   projects: ProjectItem[];
 }
 
+/** Tags shown on each project card; remainder indicated so users open details for the full list. */
+const MAX_TAGS_ON_CARD = 4;
+
 const projectCardVariants = {
   hidden: { opacity: 0, scale: 0.95, y: 16 },
   show: (i: number) => ({
@@ -30,6 +33,8 @@ function ProjectCard({
   onSelect: (p: ProjectItem) => void;
 }) {
   const [hover, setHover] = useState(false);
+  const previewTags = project.tags.slice(0, MAX_TAGS_ON_CARD);
+  const moreTagCount = project.tags.length - previewTags.length;
 
   return (
     <motion.article
@@ -55,16 +60,19 @@ function ProjectCard({
         borderColor: "#b0a86a",
         transition: { duration: 0.2, ease: "easeOut" },
       }}
+      style={{ transformOrigin: "top center" }}
       className="group relative overflow-hidden shrink-0 w-64 border border-gray-200 rounded-lg p-4 flex flex-col gap-3
                  snap-start bg-white cursor-pointer text-left"
     >
       <motion.div
-        className="pointer-events-none absolute top-0 left-0 right-0 z-20 h-0.5 bg-[#3d4a1a]"
-        style={{ transformOrigin: "left" }}
-        initial={{ scaleX: 0, opacity: 0 }}
-        animate={{ scaleX: hover ? 1 : 0, opacity: hover ? 1 : 0 }}
-        transition={{ duration: 0.25 }}
+        className="pointer-events-none absolute top-0 left-0 z-20 h-0.5 bg-[#3d4a1a]"
         aria-hidden
+        initial={false}
+        animate={{
+          width: hover ? "100%" : "0%",
+          opacity: hover ? 1 : 0,
+        }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
       />
       <div className="relative z-10 flex flex-col gap-3 flex-1 min-h-0">
         <div className="flex items-start justify-between gap-2">
@@ -97,8 +105,8 @@ function ProjectCard({
 
         <p className="text-sm text-gray-600 leading-relaxed line-clamp-5 min-h-0">{project.description}</p>
 
-        <div className="flex flex-wrap gap-1.5">
-          {project.tags.map((tag) => (
+        <div className="flex flex-wrap gap-1.5 items-center">
+          {previewTags.map((tag) => (
             <span
               key={tag}
               className="px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600"
@@ -106,6 +114,14 @@ function ProjectCard({
               {tag}
             </span>
           ))}
+          {moreTagCount > 0 && (
+            <span
+              className="px-2 py-0.5 rounded text-xs font-medium bg-gray-50 text-gray-500 border border-dashed border-gray-200"
+              aria-label={`${moreTagCount} more tags — open project details to see all`}
+            >
+              +{moreTagCount} more
+            </span>
+          )}
         </div>
 
         <span className="mt-auto pt-1 text-xs font-medium text-[#556128] group-hover:text-[#3d4a1a] transition-colors">
